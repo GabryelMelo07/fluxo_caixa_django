@@ -1,0 +1,11 @@
+@import url("colors.css");
+
+.btn-delete {
+    background-color: var(--primary-sidebar-color) !important;
+    color: var(--sidebar-color);
+}
+
+.btn-delete:hover {
+    background-color: #d40606 !important;
+    color: var(--sidebar-color);
+}
