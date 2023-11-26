@@ -1,4 +1,5 @@
 const myModalConfirmarDelete = new bootstrap.Modal(document.getElementById('confirmar-deletar-movimentacao'));
+const modalPesquisarPorData = document.getElementById('pesquisarPorData');
 
 function deletarMovimentacao(idMovimentacao) {
     myModalConfirmarDelete.show();
@@ -18,6 +19,9 @@ function deletarMovimentacao(idMovimentacao) {
             success: function (response) {
                 myModalConfirmarDelete.hide();
                 carregarMovimentacoes();
+                if (modalPesquisarPorData.classList.contains('show')) {
+                    carregarMovimentacoesPorData();
+                }
             },
             error: function (xhr, status, error) {
                 console.error(error);

@@ -9,3 +9,22 @@
     background-color: #d40606 !important;
     color: var(--sidebar-color);
 }
+
+.toast.fade.show  {
+    color: white;
+    background-color: #252525cb !important;
+}
+
+.page-link {
+    color: var(--text-color) !important;
+}
+
+.page-link:hover {
+    color: var(--hover-text-color) !important;
+}
+
+.page-item:active, .page-item:focus,
+.page-link:active, .page-link:focus {
+    outline: none;
+    box-shadow: none;
+}

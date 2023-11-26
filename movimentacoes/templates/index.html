@@ -1,35 +1,11 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renato Borracharia</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{% static 'assets/img/logo-144x144.png' %}" type="image/x-icon">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous" defer></script>
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-    <!-- Box Icons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/all.css' %}">
-    <!-- Javascript -->
-    <script src="{% static 'js/carregarMovimentacoes.js' %}" defer></script>
-    <script src="{% static 'js/salvarMovimentacao.js' %}" defer></script>
-    <script src="{% static 'js/deletarMovimentacao.js' %}" defer></script>
-</head>
-<body onload="carregarMovimentacoes()">
+<body onload="carregarMovimentacoes(1) ; mask()">
     
     <main>
         <div class="container-fluid d-flex justify-content-start p-0 h-100">
+            <!-- Lado esquerdo -->
             <div class="left-side">
                 <div class="sidebar-title d-flex justify-content-center align-items-center">
                     <img src="{% static 'assets/img/logo-rr.png' %}" alt="Logo Renato Borracharia">
@@ -42,8 +18,16 @@
                                 <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Nova movimentação</a>
                             </li>
                             <li>
+                                <i class='bx bx-calendar'></i>
+                                <a href="" data-bs-toggle="modal" data-bs-target="#pesquisarPorData">Pesquisar movimentação</a>
+                            </li>
+                            <li>
+                                <i class='bx bx-bar-chart'></i>
+                                <a href="{% url 'index' %}">Movimentações</a>
+                            </li>
+                            <li>
                                 <i class='bx bx-line-chart'></i>
-                                <a href="#">Dashboard</a>
+                                <a href="{% url 'dashboard' %}">Dashboard</a>
                             </li>
                         </ul>
                     </div>
@@ -60,88 +44,47 @@
                 </div>
             </div>
             
-            <div class="right-side">
-                <table class="table table-striped" id="tabela-movimentacoes">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Data da movimentação</th>
-                            <th>Tipo da movimentação</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
+            <!-- Lado direito -->
+            <div class="right-side d-flex flex-column">
+                <div id="table_div">
+                    <table class="table table-striped" id="tabela-movimentacoes">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Data da movimentação</th>
+                                <th>Tipo da movimentação</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center" id="pagination_div">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item" id="pagina_anterior">
+                                <a class="page-link" href="#" aria-label="Pagina Anterior">
+                                    <span aria-hidden="true">&laquo; Pagina Anterior</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" id="pagina_atual">1</a></li>
+                            <li class="page-item" id="proxima_pagina">
+                                <a class="page-link" href="#" aria-label="Próxima Pagina">
+                                    <span aria-hidden="true">Próxima Pagina &raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </main>
     
-    <!-- MODAL PARA INSERIR NOVAS MOVIMENTAÇÕES -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Inserir nova operação</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="movimentacao" action="{% url 'salvar_movimentacao' %}" method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Tipo da operação</label>
-                            <div class="input-group mb-3">
-                                <select class="form-select" id="tipo_movimentacao" name="tipo_movimentacao">
-                                    <option selected>Selecionar...</option>
-                                    <option value="ENTRADA">Entrada</option>
-                                    <option value="SAÍDA">Saída</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Valor</label>
-                            <input type="text" class="form-control" id="valor_movimentacao" name="valor_movimentacao" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Descrição</label>
-                            <input type="text" class="form-control" id="descricao_movimentacao" name="descricao_movimentacao" required>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-delete">Confirmar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST GENÉRICO PARA NOTIFICAÇÕES -->
-    <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body" id="mensagemToast">
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-
-    <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE CONSULTA -->
-    <div class="modal fade" tabindex="-1" id="confirmar-deletar-movimentacao">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body align-items-center">
-                    <h5 class="modal-title">Deseja realmente deletar a movimentação?</h5>
-                </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary d-flex align-items-center gap-2" id="voltar-exclusao-btn">Não<i class='bx bx-arrow-back'></i></button>
-                    <button type="button" class="btn btn-delete d-flex align-items-center gap-2" id="confirmar-exclusao-btn">Sim<i class='bx bx-trash'></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'modals.html' %}
+    
 </body>
-</html>
+{% endblock %}

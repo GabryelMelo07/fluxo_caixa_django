@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator
-import pytz
 
 # Create your models here.
 class Movimentacao(models.Model):
@@ -36,7 +35,7 @@ class Movimentacao(models.Model):
     )
 
     data_hora = models.DateTimeField (
-        default=timezone.localtime(),
+        auto_now_add=True,
         editable=False,
         verbose_name='Data e hora'
     )
