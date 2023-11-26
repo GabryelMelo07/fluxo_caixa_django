@@ -1,0 +1,117 @@
+<!-- MODAL PARA INSERIR NOVAS MOVIMENTAÇÕES -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Inserir nova movimentação</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="movimentacao" action="{% url 'salvar_movimentacao' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Tipo da movimentação</label>
+                        <div class="input-group mb-3">
+                            <select class="form-select" id="tipo_movimentacao" name="tipo_movimentacao">
+                                <option selected>Selecionar...</option>
+                                <option value="ENTRADA">Entrada</option>
+                                <option value="SAÍDA">Saída</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Valor</label>
+                        <input type="text" class="form-control" id="valor_movimentacao" name="valor_movimentacao"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao_movimentacao"
+                            name="descricao_movimentacao" required>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-delete">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA PESQUISAR MOVIMENTAÇÕES POR DATA -->
+<div class="modal fade" id="pesquisarPorData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="pesquisarPorDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pesquisarPorDataLabel">Pesquisar movimentações por data</h1>
+                <button type="button" id="btnCloseModalPesquisarPorData" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form id="movimentacaoPorData" action="" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3 d-flex justify-content-start align-items-center gap-3">
+                            <label for="data_movimentacao" class="form-label">Escolha uma data</label>
+                            <input class="form-control" type="date" id="data_movimentacao" name="data_movimentacao"
+                                required>
+                            <button type="submit" class="btn btn-delete d-flex align-items-center gap-2" onclick="carregarMovimentacoesPorData()">Pesquisar<i
+                                    class='bx bx-search'></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div id="divTabelaMovimentacoesPorData">
+                    <table class="table table-striped" id="tabela-movimentacoes-por-data">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Data da movimentação</th>
+                                <th>Tipo da movimentação</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE MOVIMENTAÇÃO -->
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="confirmar-deletar-movimentacao">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body align-items-center">
+                <h5 class="modal-title">Deseja realmente deletar a movimentação?</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary d-flex align-items-center gap-2"
+                    id="voltar-exclusao-btn">Não<i class='bx bx-arrow-back'></i></button>
+                <button type="button" class="btn btn-delete d-flex align-items-center gap-2"
+                    id="confirmar-exclusao-btn">Sim<i class='bx bx-trash'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST GENÉRICO PARA NOTIFICAÇÕES -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificacao" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <div class="d-flex justify-content-start align-items-start">
+                <div id="mensagemToast"></div>
+                <div data-bs-theme="dark">
+                    <button type="button" class="btn-close me-2 m-2" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

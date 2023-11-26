@@ -11,20 +11,19 @@
     overflow-y: auto;
 }
 
-.right-side::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+#table_div {
+    height: calc(100% - 50px);
 }
 
-.right-side::-webkit-scrollbar
-{
-	width: 8px;
-	background-color: #F5F5F5;
+#pagination_div {
+    height: 50px;
 }
 
-.right-side::-webkit-scrollbar-thumb
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
+#data_movimentacao {
+    width: 40%;
+}
+
+#divTabelaMovimentacoesPorData {
+    border: 1px solid rgba(0,0,0,0.09);
+    border-bottom: 0;
 }
