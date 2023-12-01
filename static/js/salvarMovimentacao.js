@@ -28,6 +28,8 @@ $(document).ready(function () {
 
                     if (!window.location.href.endsWith("/dashboard/"))
                         carregarMovimentacoes();
+                    else
+                        carregarDashboard();
                 },
                 error: function (xhr, status, error) {
                     console.error(error);

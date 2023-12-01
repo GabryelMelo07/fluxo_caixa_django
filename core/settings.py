@@ -1,5 +1,4 @@
 import os
-import mimetypes
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -13,10 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6cxar((hvsipr*ij$5=+jh&c-8y$a!$gk@d=t9+8i5n)!m#p5_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['gabryelmelo.pythonanywhere.com']
-
+# ALLOWED_HOSTS = ['*'] # Development
+ALLOWED_HOSTS = ['gabryelmelo.pythonanywhere.com'] # Production
 
 # Application definition
 
@@ -100,16 +99,11 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-mimetypes.add_type("text/css", ".css", True)
-mimetypes.add_type("text/html", ".css", True)
-mimetypes.add_type("text/javascript", ".js", True)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

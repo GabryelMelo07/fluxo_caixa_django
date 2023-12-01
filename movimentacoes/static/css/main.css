@@ -8,15 +8,31 @@
     height: 100%;
     width: calc(100% - 280px);
     background: var(--body-light-color);
-    overflow-y: auto;
+    position: relative;
 }
 
 #table_div {
     height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+.table {
+    height: calc(100% - 16px)
 }
 
 #pagination_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 280px);
     height: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.nav_pagination {
+    height: 100%;
 }
 
 #data_movimentacao {
