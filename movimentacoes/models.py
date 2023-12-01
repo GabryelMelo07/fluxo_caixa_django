@@ -1,5 +1,5 @@
+from datetime import timezone
 from django.db import models
-from django.utils import timezone
 from django.core.validators import MinValueValidator
 
 # Create your models here.
@@ -8,6 +8,12 @@ class Movimentacao(models.Model):
     TIPO_CHOICES = (
         ("Entrada", "ENTRADA"),
         ("Saída", "SAIDA")
+    )
+
+    FORMA_PAGAMENTO_CHOICES = (
+        ("Pix", "PIX"),
+        ("Cartão", "CARTÃO"),
+        ("Dinheiro", "DINHEIRO")
     )
 
     valor = models.DecimalField (
@@ -27,6 +33,14 @@ class Movimentacao(models.Model):
         verbose_name='Tipo'
     )
 
+    forma_pagamento = models.CharField (
+        max_length=8,
+        choices=FORMA_PAGAMENTO_CHOICES,
+        null=False,
+        blank=False,
+        verbose_name='Forma Pagamento'
+    )
+
     descricao = models.TextField (
         max_length=255,
         null=True,
@@ -35,8 +49,9 @@ class Movimentacao(models.Model):
     )
 
     data_hora = models.DateTimeField (
-        auto_now_add=True,
-        editable=False,
+        default=None,
+        null=False,
+        blank=False,
         verbose_name='Data e hora'
     )
 

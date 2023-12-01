@@ -24,6 +24,8 @@ $(document).ready(function () {
                     $('#tipo_movimentacao').val('');
                     $('#valor_movimentacao').val('');
                     $('#descricao_movimentacao').val('');
+                    $('#forma_pagamento').val('');
+                    $('#data_movimentacao_input').val('');
                     myModal.hide();
 
                     if (!window.location.href.endsWith("/dashboard/"))
@@ -44,6 +46,8 @@ function fecharModalEAbrirToast(message) {
     $('#tipo_movimentacao').val('');
     $('#valor_movimentacao').val('');
     $('#descricao_movimentacao').val('');
+    $('#forma_pagamento').val('');
+    $('#data_movimentacao_input').val('');
     myModal.hide();
     toastBootstrap.show();
 }

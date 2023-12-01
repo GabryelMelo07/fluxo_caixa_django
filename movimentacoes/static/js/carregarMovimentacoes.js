@@ -13,12 +13,13 @@ function carregarMovimentacoes(pagina) {
                 var movimentacao = movimentacoes[i];
                 tableBody.append(`
                             <tr>
-                                <td class="align-middle">${movimentacao.id}</td>
-                                <td class="align-middle">${movimentacao.data_hora}</td>
-                                <td class="align-middle">${movimentacao.tipo}</td>
-                                <td class="align-middle">${movimentacao.descricao}</td>
-                                <td class="align-middle">R$ ${movimentacao.valor}</td>
-                                <td class="text-center align-middle"><button type="button" class="btn btn-delete btn-sm d-flex align-items-center gap-2" onclick="deletarMovimentacao(${movimentacao.id})">Deletar<i class='bx bxs-trash'></i></button></td>
+                                <td class="text-center align-middle">${movimentacao.id}</td>
+                                <td class="text-center align-middle">${movimentacao.data_hora}</td>
+                                <td class="text-center align-middle">${movimentacao.tipo}</td>
+                                <td class="text-center align-middle">${movimentacao.descricao}</td>
+                                <td class="text-center align-middle">R$ ${movimentacao.valor}</td>
+                                <td class="text-center align-middle">${movimentacao.forma_pagamento}</td>
+                                <td><button type="button" class="btn btn-delete btn-sm d-flex align-items-center gap-2" onclick="deletarMovimentacao(${movimentacao.id})">Deletar<i class='bx bxs-trash'></i></button></td>
                             </tr>
                         `);
             }

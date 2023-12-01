@@ -11,7 +11,7 @@
                 <form id="movimentacao" action="{% url 'salvar_movimentacao' %}" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Tipo da movimentação</label>
+                        <label for="tipo_movimentacao" class="form-label">Tipo da movimentação</label>
                         <div class="input-group mb-3">
                             <select class="form-select" id="tipo_movimentacao" name="tipo_movimentacao">
                                 <option selected>Selecionar...</option>
@@ -21,14 +21,27 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Valor</label>
-                        <input type="text" class="form-control" id="valor_movimentacao" name="valor_movimentacao"
-                            required>
+                        <label for="forma_pagamento" class="form-label">Forma de pagamento</label>
+                        <div class="input-group mb-3">
+                            <select class="form-select" id="forma_pagamento" name="forma_pagamento">
+                                <option selected>Selecionar...</option>
+                                <option value="PIX">Pix</option>
+                                <option value="CARTÃO">Cartão</option>
+                                <option value="DINHEIRO">Dinheiro</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" id="descricao_movimentacao"
-                            name="descricao_movimentacao" required>
+                        <label for="valor_movimentacao" class="form-label">Valor</label>
+                        <input type="text" class="form-control" id="valor_movimentacao" name="valor_movimentacao" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao_movimentacao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao_movimentacao" name="descricao_movimentacao" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="data_movimentacao_input" class="form-label">Data</label>
+                        <input class="form-control" type="datetime-local" id="data_movimentacao_input" name="data_movimentacao_input">
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -71,6 +84,7 @@
                                 <th>Tipo da movimentação</th>
                                 <th>Descrição</th>
                                 <th>Valor</th>
+                                <th>Forma de pagamento</th>
                                 <th>Excluir</th>
                             </tr>
                         </thead>

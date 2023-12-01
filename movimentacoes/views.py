@@ -1,6 +1,6 @@
 import locale
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.utils import timezone
@@ -30,7 +30,8 @@ def obter_movimentacoes(request):
             'data_hora': movimentacao.data_hora.strftime('%d/%m/%Y %H:%M'),
             'tipo': movimentacao.tipo,
             'descricao': movimentacao.descricao,
-            'valor': str(movimentacao.valor)
+            'valor': str(movimentacao.valor),
+            'forma_pagamento': movimentacao.forma_pagamento
         })
 
     response_data = {
@@ -57,7 +58,8 @@ def obter_movimentacoes_por_data(request):
                 'data_hora': movimentacao.data_hora.strftime('%d/%m/%Y %H:%M'),
                 'tipo': movimentacao.tipo,
                 'descricao': movimentacao.descricao,
-                'valor': str(movimentacao.valor)
+                'valor': str(movimentacao.valor),
+                'forma_pagamento': movimentacao.forma_pagamento
             })
         
         return JsonResponse({'movimentacoes': data})
@@ -69,9 +71,22 @@ def salvar_movimentacao(request):
         tipo_movimentacao = request.POST.get('tipo_movimentacao')
         valor_movimentacao = request.POST.get('valor_movimentacao')
         descricao_movimentacao = request.POST.get('descricao_movimentacao')
+        forma_pagamento_movimentacao = request.POST.get('forma_pagamento')
+        data_hora_movimentacao = request.POST.get('data_movimentacao_input')
+
+        if data_hora_movimentacao:
+            data_hora_movimentacao = timezone.datetime.strptime(data_hora_movimentacao, "%Y-%m-%dT%H:%M")
+        else:
+            data_hora_movimentacao = timezone.now()
 
         valor_movimentacao_decimal = Decimal(valor_movimentacao.replace('.', '').replace(',', '.'))
-        movimentacao = Movimentacao(tipo=tipo_movimentacao, valor=valor_movimentacao_decimal, descricao=descricao_movimentacao)
+        movimentacao = Movimentacao(
+            tipo = tipo_movimentacao,
+            valor = valor_movimentacao_decimal,
+            descricao = descricao_movimentacao,
+            forma_pagamento = forma_pagamento_movimentacao,
+            data_hora = data_hora_movimentacao
+        )
         movimentacao.save()
 
         return JsonResponse({'success': True})
@@ -165,7 +180,12 @@ def relatorio_movimentacoes_diario(request):
             data_hora__date=data_atual
         ).aggregate(Sum('valor'))['valor__sum'] or Decimal('0.00')
 
-        lucros_do_dia = locale.format_string('R$ %.2f', total_entradas - total_saidas_dia, grouping=True)
+        result_dia = total_entradas - total_saidas_dia
+
+        if result_dia < 0:
+            result_dia = 0
+
+        lucros_do_dia = locale.format_string('R$ %.2f', result_dia, grouping=True)
         total_despesas_dia = locale.format_string('R$ %.2f', total_saidas_dia, grouping=True)
 
         total_entradas_mes = Movimentacao.objects.filter(
@@ -180,7 +200,12 @@ def relatorio_movimentacoes_diario(request):
             data_hora__year=data_atual.year
         ).aggregate(Sum('valor'))['valor__sum'] or Decimal('0.00')
 
-        lucro_mes = locale.format_string('R$ %.2f', total_entradas_mes - total_saidas_mes, grouping=True)
+        result_mes = total_entradas_mes - total_saidas_mes
+
+        if result_mes < 0:
+            result_mes = 0
+
+        lucro_mes = locale.format_string('R$ %.2f', result_mes, grouping=True)
         total_despesas_mes = locale.format_string('R$ %.2f', total_saidas_mes, grouping=True)
 
         response_data = {
