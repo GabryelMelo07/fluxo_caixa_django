@@ -1,0 +1,63 @@
+@import url("colors.css");
+
+.sidebar-title {
+    padding: 10px 10px;
+    height: 200px;
+    border: 1px solid rgba(0, 0, 0, .0625);
+}
+
+.sidebar-title img {
+    height: 200px;
+    width: 200px;
+}
+
+.menu {
+    height: calc(100% - 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-right: 1px solid rgba(0, 0, 0, .075);
+}
+
+div.menu ul {
+    list-style-type: none;
+}
+
+div.menu ul li {
+    padding: 20px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .0625);
+}
+
+div.menu ul li i {
+    font-size: 20px;
+}
+
+div.menu ul li a {
+    margin-left: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+div.menu ul li a:hover {
+    color: var(--hover-text-color);
+}
+
+.social-media-icons div a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+#fb, #insta {
+    font-size: 25px;
+}
+
+#assinatura {
+    font-size: 15px;
+}

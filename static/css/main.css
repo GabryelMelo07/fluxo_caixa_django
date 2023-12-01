@@ -1,0 +1,29 @@
+.left-side {
+    height: 100%;
+    width: 280px;
+    background: var(--sidebar-color);
+}
+
+.right-side {
+    height: 100%;
+    width: calc(100% - 280px);
+    background: var(--body-light-color);
+    overflow-y: auto;
+}
+
+#table_div {
+    height: calc(100% - 50px);
+}
+
+#pagination_div {
+    height: 50px;
+}
+
+#data_movimentacao {
+    width: 40%;
+}
+
+#divTabelaMovimentacoesPorData {
+    border: 1px solid rgba(0,0,0,0.09);
+    border-bottom: 0;
+}
