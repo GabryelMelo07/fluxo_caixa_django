@@ -1,0 +1,29 @@
+@import url("colors.css");
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 400px;
+}
+
+.chart {
+    height: 100%;
+    width: 500px;
+}
+
+.card {
+    width: 15%;
+    height: 120px;
+    background-color: var(--sidebar-color);
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.card-text {
+    font-size: 18px;
+}

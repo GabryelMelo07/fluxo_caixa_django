@@ -19,7 +19,7 @@ def dashboard(request):
 def obter_movimentacoes(request):
     movimentacoes = Movimentacao.objects.all().order_by('-id')
 
-    paginator = Paginator(movimentacoes, 18)
+    paginator = Paginator(movimentacoes, 14)
     numero_pagina = request.GET.get('pagina')
     pagina_movimentacoes = paginator.get_page(numero_pagina)
 
