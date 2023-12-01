@@ -16,10 +16,6 @@
     overflow-y: auto;
 }
 
-.table {
-    height: calc(100% - 16px)
-}
-
 #pagination_div {
     display: flex;
     justify-content: center;
